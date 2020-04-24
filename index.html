@@ -6,8 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
-  <body>
-    <div id="root"></div>
+  <body class="win98">
+    <div class="resizable window">
+      <div id="header" class="header">        
+        app
+        <div class="buttons">
+          <button>_</button>
+          <button>◽</button>
+          <button>X</button>
+        </div>
+      </div>
+      <div class="content">
+        <div id="root"></div>
+      </div>
+</div>
+    
     <input id="real" type="range" min="-1" max="1" step="0.01"/>
     <input id="imaginary" type="range" min="-1" max="1" step="0.01"/>    
   </body>

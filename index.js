@@ -1,6 +1,7 @@
 import { disableFetch,getFetchAllDataFunc } from "./modules/fetchModule.js";
 import _ from "underscore";
 import canvas,{zoom, getStore,drag, saveSnapshotCanvas,canvasStore} from "./modules/canvasManipulate";
+import {addDomDragHandle,addCanvasWheelHandle} from "./modules/eventUtil.js";
 import "./index.css";
 
 
@@ -29,60 +30,51 @@ render(initialFractalLocationInfo, option);
 
 /************add event handle for canvas**************/
 //wheel event implement
-var addCanvasWheelHandle = ((canvas,handle)=>{
-  canvas.addEventListener("wheel",handle);
-})
 
 addCanvasWheelHandle(canvas, function (e) {
   console.log("wheel");
   disableFetch();
+  let x = e.clientX - canvas.getBoundingClientRect().left;
+  let y = e.clientY - canvas.getBoundingClientRect().top;
+  
   if(e.deltaY<0){
-    _.throttle(zoom, 200)(1.2, e.clientX, e.clientY);
+    _.throttle(zoom, 200)(1.2, x, y);
   }else{
-    _.throttle(zoom, 200)(1/1.2, e.clientX, e.clientY);
+    _.throttle(zoom, 200)(1/1.2, x, y);
   }
   
   debouncedRender(canvasStore.getState().fractalLocation, option);
   e.stopPropagation();
 })
 
-
-//drag event implement
-var moveX = 0;
-var moveY = 0;
-var addCanvasDragHandle = ((canvas, handle) => {
-  canvas.addEventListener("mousedown", function () {
-    canvas.addEventListener("mousemove", handle);
-    //clear
-    moveX = 0;
-    moveY = 0;
-    //save snapshot
-    saveSnapshotCanvas();
-
-  });
-  canvas.addEventListener("mouseup", function () {
-    canvas.removeEventListener("mousemove", handle)
-  });
-
-  canvas.addEventListener("mouseleave", function () {
-    canvas.removeEventListener("mousemove", handle)
-  });
-})
-
-addCanvasDragHandle(canvas, function ({ movementX, movementY }) {
+addDomDragHandle(canvas, function ({ movementX, movementY }) {
   //副本
   disableFetch();
-  moveX = moveX + movementX;
-  moveY = moveY + movementY;
   //clear
-  drag(moveX,moveY,movementX,movementY); 
+  drag(movementX,movementY); 
   debouncedRender(canvasStore.getState().fractalLocation, option);
 }
 );
 
 /************add event handle for canvas**************/
+function $(selector){
+  return document.querySelector(selector);
+}
 
+function getPositionOfDom(element){
+     let left = parseInt(window.getComputedStyle(element)["left"]);     
+     let top = parseInt(window.getComputedStyle(element)["top"]);
+    return {left,top}
+}
 
+addDomDragHandle($(".header"), function (e) {
+  //副本
+  e.preventDefault();
+  let win = $(".window");
+  win.style.left = getPositionOfDom(win).left+e.movementX+"px";
+  win.style.top = getPositionOfDom(win).top+e.movementY+"px";
+}
+);
 
 
 document.getElementById("imaginary").addEventListener("change",function(e){

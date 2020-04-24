@@ -6,11 +6,6 @@ var canvas = document.createElement("canvas");
 var canvasContext = canvas.getContext("2d");
 root.appendChild(canvas);
 
-let x0 = -1.5;
-let x1 = 1.5;
-let y0 = -1;
-let y1 = 1;
-let store = {x0,x1,y0,y1};
 let snapshotCanvas = null;
 
 
@@ -25,9 +20,7 @@ export function saveSnapshotCanvas(){
     snapshotCanvas.getContext("2d").drawImage(canvas, 0, 0);
 }
 
-export function getStore(){
-    return store;
-}
+
 
 export function clearCanvas(){     
     canvasContext.clearRect(0,0,canvas.width,canvas.height);
@@ -63,13 +56,13 @@ export function zoom(zoom,x,y){
      canvasContext.drawImage(cvs,(1-zoom)*x,(1-zoom)*y,canvas.width*zoom,canvas.height*zoom);
 }
 
-export function drag(moveX, moveY,movementX,movementY){
-
+export function drag(movementX,movementY){
+  saveSnapshotCanvas();
   clearCanvas();
   //reduce
   canvasStore.dispatch({type:"drag",payload:{movementX,movementY}});
   //draw
-  canvas.getContext("2d").drawImage(snapshotCanvas, moveX, moveY);
+  canvas.getContext("2d").drawImage(snapshotCanvas, movementX, movementY);
 }
 
 
