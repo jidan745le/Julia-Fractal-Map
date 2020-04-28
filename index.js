@@ -29,30 +29,38 @@ render(initialFractalLocationInfo, option);
 
 
 /************add event handle for canvas**************/
+function wheelCanvas(event) {
+  let x = event.clientX - canvas.getBoundingClientRect().left;
+  let y = event.clientY - canvas.getBoundingClientRect().top;
+
+  if (event.deltaY < 0) {
+    zoom(1.2, x, y);
+  } else {
+    zoom(1 / 1.2, x, y);
+  }
+
+  debouncedRender(canvasStore.getState().fractalLocation, option);
+  event.stopPropagation();
+}
+
+
+function moveCanvas(event){
+  let { movementX, movementY } = event;
+  drag(movementX,movementY); 
+  debouncedRender(canvasStore.getState().fractalLocation, option);
+}
 //wheel event implement
 
 addCanvasWheelHandle(canvas, function (e) {
   console.log("wheel");
   disableFetch();
-  let x = e.clientX - canvas.getBoundingClientRect().left;
-  let y = e.clientY - canvas.getBoundingClientRect().top;
-  
-  if(e.deltaY<0){
-    _.throttle(zoom, 200)(1.2, x, y);
-  }else{
-    _.throttle(zoom, 200)(1/1.2, x, y);
-  }
-  
-  debouncedRender(canvasStore.getState().fractalLocation, option);
-  e.stopPropagation();
+  wheelCanvas(e);
 })
 
-addDomDragHandle(canvas, function ({ movementX, movementY }) {
+addDomDragHandle(canvas, function (e) {
   //副本
   disableFetch();
-  //clear
-  drag(movementX,movementY); 
-  debouncedRender(canvasStore.getState().fractalLocation, option);
+  moveCanvas(e);
 }
 );
 
@@ -75,6 +83,25 @@ addDomDragHandle($(".header"), function (e) {
   win.style.top = getPositionOfDom(win).top+e.movementY+"px";
 }
 );
+
+
+const resizeObserver = new ResizeObserver(entries => {
+  console.log(entries);
+  for (let entry of entries) {
+      console.log("Size",entry);
+      let {width,height} = entry.contentRect;
+  }
+  console.log('Size changed');
+});
+
+const mutationObserver = new MutationObserver(entries=>{
+  for (let entry of entries) {
+    console.log("mutation",entry);    
+  }
+})
+resizeObserver.observe($(".window"));
+mutationObserver.observe($(".window"),{attributes: true});
+
 
 
 document.getElementById("imaginary").addEventListener("change",function(e){
