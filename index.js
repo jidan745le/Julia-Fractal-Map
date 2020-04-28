@@ -1,10 +1,13 @@
 import { disableFetch,getFetchAllDataFunc } from "./modules/fetchModule.js";
 import _ from "underscore";
-import canvas,{zoom, getStore,drag, saveSnapshotCanvas,canvasStore} from "./modules/canvasManipulate";
+import canvas,{zoom, getStore,drag, saveSnapshotCanvas,getSnapshotCanvas,canvasStore,setCanvasSize} from "./modules/canvasManipulate";
 import {addDomDragHandle,addCanvasWheelHandle} from "./modules/eventUtil.js";
 import "./index.css";
 
-
+function resizeRenderFunction(width,height){
+    let render = getFetchAllDataFunc(width, height);
+    debouncedRender = _.debounce(render,100);    
+}
 
 /****init****/
 
@@ -25,11 +28,14 @@ let option = { chunkSize, threadNum,juliaParameter };
 //init render
 render(initialFractalLocationInfo, option);
 
+
+
 /****init****/
 
 
 /************add event handle for canvas**************/
 function wheelCanvas(event) {
+  event.stopPropagation();
   let x = event.clientX - canvas.getBoundingClientRect().left;
   let y = event.clientY - canvas.getBoundingClientRect().top;
 
@@ -39,15 +45,15 @@ function wheelCanvas(event) {
     zoom(1 / 1.2, x, y);
   }
 
-  debouncedRender(canvasStore.getState().fractalLocation, option);
-  event.stopPropagation();
+  debouncedRender(canvasStore.getState().fractalLocation, option);    
 }
 
 
 function moveCanvas(event){
   let { movementX, movementY } = event;
+  console.log("movement");
   drag(movementX,movementY); 
-  debouncedRender(canvasStore.getState().fractalLocation, option);
+  debouncedRender(canvasStore.getState().fractalLocation, option);  
 }
 //wheel event implement
 
@@ -88,41 +94,42 @@ addDomDragHandle($(".header"), function (e) {
 const resizeObserver = new ResizeObserver(entries => {
   console.log(entries);
   for (let entry of entries) {
-      console.log("Size",entry);
+      
       let {width,height} = entry.contentRect;
+      let snapshotCanvas = getSnapshotCanvas();
+      console.log(width,height);
+      
+      resizeRenderFunction(width,height-20);
+      snapshotCanvas && canvas.getContext("2d").drawImage(snapshotCanvas,0,0,width,height-20);   
   }
   console.log('Size changed');
 });
 
-const mutationObserver = new MutationObserver(entries=>{
-  for (let entry of entries) {
-    console.log("mutation",entry);    
-  }
-})
+
 resizeObserver.observe($(".window"));
-mutationObserver.observe($(".window"),{attributes: true});
 
 
 
-document.getElementById("imaginary").addEventListener("change",function(e){
-  canvasStore.dispatch({type:"reset",payload:initialFractalLocationInfo});
+
+// document.getElementById("imaginary").addEventListener("change",function(e){
+//   canvasStore.dispatch({type:"reset",payload:initialFractalLocationInfo});
   
-  console.log("reset",canvasStore.getState());
-  console.log(typeof e.target.value);
-  option.juliaParameter.imaginary = parseFloat(e.target.value);
-  render(initialFractalLocationInfo, option);
+//   console.log("reset",canvasStore.getState());
+//   console.log(typeof e.target.value);
+//   option.juliaParameter.imaginary = parseFloat(e.target.value);
+//   render(initialFractalLocationInfo, option);
 
-})
+// })
 
-document.getElementById("real").addEventListener("change",function(e){
-  canvasStore.dispatch({type:"reset",payload:initialFractalLocationInfo});
-  console.log("reset initialFractalLocationInfo",initialFractalLocationInfo);
-  console.log("reset",canvasStore.getState());
-  console.log(typeof e.target.value);
-  option.juliaParameter.real = parseFloat(e.target.value);
-  render(initialFractalLocationInfo, option);
+// document.getElementById("real").addEventListener("change",function(e){
+//   canvasStore.dispatch({type:"reset",payload:initialFractalLocationInfo});
+//   console.log("reset initialFractalLocationInfo",initialFractalLocationInfo);
+//   console.log("reset",canvasStore.getState());
+//   console.log(typeof e.target.value);
+//   option.juliaParameter.real = parseFloat(e.target.value);
+//   render(initialFractalLocationInfo, option);
 
-})
+// })
 
 //test
 // function createDom(tpl){

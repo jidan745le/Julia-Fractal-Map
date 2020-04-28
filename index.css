@@ -74,7 +74,8 @@ button, html input[type="button"], input[type="reset"], input[type="submit"] {
     cursor: pointer;
 }
 
-.win98 .window .content {
-    
+canvas {
+    display:block
 }
+
 

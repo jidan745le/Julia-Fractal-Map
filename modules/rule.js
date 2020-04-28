@@ -45,6 +45,13 @@ export function rule(state = initialState, action) {
             };
         }
 
+        case "setSize":{
+            let canvasSize = {...action.payload}
+            return {
+                ...state, canvasSize
+            };
+        }
+
         default:
             return state;
     }

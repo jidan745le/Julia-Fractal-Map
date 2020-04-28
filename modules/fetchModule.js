@@ -1,4 +1,4 @@
-import { drawChunk, setCanvasSize } from "./canvasManipulate";
+import { drawChunk, setCanvasSize,saveSnapshotCanvas } from "./canvasManipulate";
 //properties {worker,working,promiseInstance}
 var workers = [{}, {}, {}, {}, {}, {}, {}, {}];
 var stopFlag = false;
@@ -107,6 +107,9 @@ let getFetchAllDataFunc = (canvasWidth, canvasHeight) => {
                     }
                 })
             }
+        }).then(()=>{
+            //保存快照
+            saveSnapshotCanvas();
         })
 
     }

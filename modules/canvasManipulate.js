@@ -20,6 +20,11 @@ export function saveSnapshotCanvas(){
     snapshotCanvas.getContext("2d").drawImage(canvas, 0, 0);
 }
 
+export function getSnapshotCanvas(){
+    return snapshotCanvas;
+}
+
+
 
 
 export function clearCanvas(){     
@@ -29,6 +34,7 @@ export function clearCanvas(){
 export function setCanvasSize(width,height){
     canvas.width = width;
     canvas.height = height;
+    canvasStore.dispatch({type:"setSize",payload:{width,height}});
 }
 
 export function getCanvasSize(){
