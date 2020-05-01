@@ -1,7 +1,9 @@
-function getRandomFunction(from, to) {
-    return function () {
-        return from + Math.round(Math.random() * (to - from));
-    }
+export function $(selector) {
+    return document.querySelector(selector);
 }
 
-export {getRandomFunction};
+export function getPositionOfDom(element) {
+    let left = parseInt(window.getComputedStyle(element)["left"]);
+    let top = parseInt(window.getComputedStyle(element)["top"]);
+    return { left, top }
+}

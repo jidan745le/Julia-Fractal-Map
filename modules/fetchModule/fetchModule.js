@@ -1,4 +1,5 @@
-import { drawChunk, setCanvasSize,saveSnapshotCanvas } from "./canvasManipulate";
+import { drawChunk, setCanvasSize, saveSnapshotCanvas } from "../canvasModule/canvasBasic.js";
+import _ from "underscore";
 //properties {worker,working,promiseInstance}
 var workers = [{}, {}, {}, {}, {}, {}, {}, {}];
 var stopFlag = false;
@@ -89,7 +90,7 @@ let getFetchAllDataFunc = (canvasWidth, canvasHeight) => {
                 let option = { real: juliaParameter.real, imaginary: juliaParameter.imaginary }
 
                 //prepare chunkdata payload
-                let payloadChunkData = { fractalChunkData, canvasData,option };
+                let payloadChunkData = { fractalChunkData, canvasData, option };
                 console.log(payloadChunkData);
 
                 //fetchCalcData
@@ -107,7 +108,7 @@ let getFetchAllDataFunc = (canvasWidth, canvasHeight) => {
                     }
                 })
             }
-        }).then(()=>{
+        }).then(() => {
             //保存快照
             saveSnapshotCanvas();
         })
@@ -116,4 +117,19 @@ let getFetchAllDataFunc = (canvasWidth, canvasHeight) => {
     return fetchAllData;
 }
 
-export { fetchCalcData, disableFetch, enableFetch, getFetchAllDataFunc };
+function resizeRenderFunction(width, height) {
+    let render = getFetchAllDataFunc(width, height);
+    debouncedRender = _.debounce(render, 100);
+}
+
+
+//默认渲染函数 设置canvas为900*600尺寸的渲染函数
+let render = getFetchAllDataFunc(900, 600);
+
+//对渲染函数进行防抖包装
+let debouncedRender = _.debounce(render, 100);
+
+
+
+
+export { fetchCalcData, disableFetch, enableFetch, getFetchAllDataFunc, resizeRenderFunction, render, debouncedRender };

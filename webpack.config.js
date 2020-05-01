@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CircularDependencyPlugin = require('circular-dependency-plugin')
 
 module.exports = {
   //指定打包的入口文件
@@ -51,7 +52,8 @@ module.exports = {
     // new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].css"
-    })
+    }),
+    new CircularDependencyPlugin()
   ],
   devServer: {
     contentBase: "./build",
