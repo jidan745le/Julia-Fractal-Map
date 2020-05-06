@@ -39,6 +39,13 @@ module.exports = {
       {
         test: /\.scss$/, //loader是有执行顺序，从后往前
         use: ["style-loader", "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
       }
     ]
   },
@@ -59,10 +66,6 @@ module.exports = {
     contentBase: "./build",
     open: true,
     port: "8081",
-    proxy: {
-      "/api": {
-        target: "http://localhost:9092"
-      }
-    }
+
   }
 };

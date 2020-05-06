@@ -1,0 +1,13 @@
+.gradient {    
+    height: 150px;
+    width:200px;
+    position: relative;
+    border-bottom:1px solid white;
+}
+
+.dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+}

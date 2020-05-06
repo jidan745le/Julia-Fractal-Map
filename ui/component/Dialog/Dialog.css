@@ -1,0 +1,75 @@
+html{
+    touch-action:none;
+ }
+
+ body {
+     margin:0px;
+ }
+
+ .panel {
+     background-color: aqua;
+     width:100px;
+     height:100px;
+ }
+
+ .win98 .resizable {
+    overflow: hidden;
+    resize: both;
+}
+.win98 .window {        
+    position: absolute;
+    background: #bfbfbf;
+    border: 1px solid;
+    border-top-color: #dfdfdf;
+    border-left-color: #dfdfdf;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+    box-shadow: 1px 1px 0 0 #000;
+}
+
+.win98 .window .header {
+    margin: 2px 2px 0;
+    padding: 1px 2px;
+    color: #fff;
+    background: -webkit-linear-gradient(left, #000080, #1084d0);
+    background: linear-gradient(to right, #000080, #1084d0);
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 16px;
+}
+
+.win98 .window .header .buttons {
+    height: 14px;
+    float: right;
+}
+
+.win98 .window .header .buttons button {
+    vertical-align: text-top;
+    font-weight: bold;
+    line-height: 12px;
+    padding: 0;
+    height: 14px;
+    width: 14px;
+}
+
+.win98 button {
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: none;
+    font-size: 11px;
+    font-family: Tahoma, Verdana;
+    color: #070707;
+    background: #bfbfbf;
+    border: 1px solid;
+    border-top-color: #dfdfdf;
+    border-left-color: #dfdfdf;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+    box-shadow: 1px 1px 0 0 #000;
+    text-align: center;
+    outline: none;
+    padding: 4px;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}

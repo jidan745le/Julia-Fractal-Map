@@ -87,7 +87,7 @@ let getFetchAllDataFunc = (canvasWidth, canvasHeight) => {
                 let fractalChunkData = { x0, y0, x1, y1 };
 
                 //prepare option
-                let option = { real: juliaParameter.real, imaginary: juliaParameter.imaginary }
+                let option = { real: juliaParameter.real, imaginary: juliaParameter.imaginary,platte:juliaParameter.platte }
 
                 //prepare chunkdata payload
                 let payloadChunkData = { fractalChunkData, canvasData, option };
@@ -118,7 +118,7 @@ let getFetchAllDataFunc = (canvasWidth, canvasHeight) => {
 }
 
 function resizeRenderFunction(width, height) {
-    let render = getFetchAllDataFunc(width, height);
+    render = getFetchAllDataFunc(width, height);
     debouncedRender = _.debounce(render, 100);
 }
 

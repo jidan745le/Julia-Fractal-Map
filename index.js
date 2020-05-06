@@ -2,9 +2,10 @@ import { disableFetch, resizeRenderFunction, render } from "./modules/fetchModul
 import {wheelCanvas, moveCanvas } from "./modules/canvasModule/canvasManipulate";
 import canvas, { getSnapshotCanvas} from "./modules/canvasModule/canvasBasic";
 import { addDomDragHandle, addCanvasWheelHandle } from "./modules/eventModule/eventUtil.js";
-import { initialFractalLocationInfo, option } from "./modules/option.js";
+import { initialFractalLocationInfo, option,setPlatteOption } from "./modules/option.js";
 import { $, getPositionOfDom } from "./modules/util.js";
 import "./index.css";
+import "./ui/index.js";
 
 //init render
 render(initialFractalLocationInfo, option);
