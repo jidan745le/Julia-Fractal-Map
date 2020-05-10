@@ -6,6 +6,7 @@
 }
 
 .dot {
+    cursor: pointer;
     position: absolute;
     width: 10px;
     height: 10px;

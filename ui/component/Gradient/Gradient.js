@@ -4,7 +4,7 @@ import "./Gradient.css";
 import {once} from "../../util/const.js";
 import {transformPositionToStyle} from "../../util/transform.js";
 import {initialFractalLocationInfo,option,setPlatteOption} from "../../../modules/option";
-import {render} from "../../../modules/fetchModule/fetchModule";
+import {render,disableFetch} from "../../../modules/fetchModule/fetchModule";
 import {canvasStore} from "../../../modules/canvasModule/canvasBasic";
 
 export default class Gradient extends Component {
@@ -21,12 +21,15 @@ export default class Gradient extends Component {
 
     changeDotPositions(dotEvent, id) {       
 
-        this.removeMouseMoveListener = () => {
+        this.removeMouseMoveListener = (e) => {
             this.$currentGradient.removeEventListener("mousemove", this.boundChangePositionsState);
-            console.log("originalPositions",this.props.originalPositions)
+            this.$currentGradient.removeEventListener("mouseleave", this.removeMouseMoveListener);
+            console.log("removeMouseMoveListener");
             setPlatteOption(this.props.originalPositions);
             render(canvasStore.getState().fractalLocation, option);
         }
+
+ 
 
         this.addEventHandleForCurrentGradient = (eventType, handle, isOnce) => {
             this.$currentGradient.addEventListener(eventType, handle, isOnce ? once : false)
@@ -49,7 +52,7 @@ export default class Gradient extends Component {
         let colorChannelId = this.props.colorChannel;
         let position = { x: clientX - left, y: clientY - top };
 
-        if (position.x < 0 || position.x > 200 || position.y < 0 || position.y > 150) {
+        if (position.x < 0 || position.x > 200 || position.y < 0 || position.y > 150) {            
             //边界检测，超出边界取消事件处理函数绑定
             this.removeMouseMoveListener();
             return;
@@ -80,6 +83,7 @@ function GradientControlDot({ id, position, changeDotPosition }) {
     let posStyle = transformPositionToStyle(position);
     let onMouseDownHandle = e => {
         e.preventDefault();
+        disableFetch();
         changeDotPosition(e, id);
     };
 

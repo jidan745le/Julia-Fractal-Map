@@ -7,9 +7,9 @@ let chunkSize = { width: 100, height: 100 };
 let defaultPlatte = Array.from({length:201}).map((i,idx)=>{
     return [0,0,0,idx];
 })
+//0.45, -0.1428
 
-
-let juliaParameter = { real: 0.285, imaginary: 0.00, platte: defaultPlatte };
+let juliaParameter = { real: -0.835, imaginary:  -0.2321, platte: defaultPlatte };
 let option = { chunkSize, threadNum, juliaParameter };
 
 
