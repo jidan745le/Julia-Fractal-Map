@@ -6,13 +6,14 @@ import Gradient from "./component/Gradient/Gradient.js";
 import store from "./store/store.js";
 import {transformPositionToLinearGradientStyle,rgbArray} from "./util/transform.js";
 import { Dialog } from "./component/Dialog/Dialog.js";
+import {TabPane,Tabs,Control} from "./component/Control/Control"
 
 
 const mapStateToProps = state =>{  
   return {
-    originalPositions:state.positions,
-    positions: _.unzip(state.positions),
-    background:transformPositionToLinearGradientStyle(state.positions)
+    originalPositions:state.gradient.positions,
+    positions: _.unzip(state.gradient.positions),
+    background:transformPositionToLinearGradientStyle(state.gradient.positions)
   };
 } 
 
@@ -39,6 +40,7 @@ function App(props) {
             <Dialog>
               <Gradients />
             </Dialog>
+            <Control/>
         </Provider>
 }
 
