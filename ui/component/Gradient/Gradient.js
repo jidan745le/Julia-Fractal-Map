@@ -1,13 +1,15 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import "./Gradient.css";
-import {once} from "../../util/const.js";
-import {transformPositionToStyle} from "../../util/transform.js";
-import {initialFractalLocationInfo,option,setPlatteOption} from "../../../modules/option";
-import {render,disableFetch} from "../../../modules/fetchModule/fetchModule";
-import {canvasStore} from "../../../modules/canvasModule/canvasBasic";
+import { once } from "../../util/const.js";
+import { transformPositionToStyle } from "../../util/transform.js";
+import { option, setPlatteOption } from "../../../modules/option";
+import { render, disableFetch } from "../../../modules/fetchModule/fetchModule";
+import { canvasStore } from "../../../modules/canvasModule/canvasBasic";
+import { transformPositionToLinearGradientStyle, rgbArray } from "../../util/transform";
+import { connect } from "react-redux";
 
-export default class Gradient extends Component {
+class Gradient extends Component {
 
     constructor(props) {
         super(props);
@@ -19,7 +21,7 @@ export default class Gradient extends Component {
         this.$currentGradient = this.$gradient.current;
     }
 
-    changeDotPositions(dotEvent, id) {       
+    changeDotPositions(dotEvent, id) {
 
         this.removeMouseMoveListener = (e) => {
             this.$currentGradient.removeEventListener("mousemove", this.boundChangePositionsState);
@@ -29,7 +31,7 @@ export default class Gradient extends Component {
             render(canvasStore.getState().fractalLocation, option);
         }
 
- 
+
 
         this.addEventHandleForCurrentGradient = (eventType, handle, isOnce) => {
             this.$currentGradient.addEventListener(eventType, handle, isOnce ? once : false)
@@ -52,7 +54,7 @@ export default class Gradient extends Component {
         let colorChannelId = this.props.colorChannel;
         let position = { x: clientX - left, y: clientY - top };
 
-        if (position.x < 0 || position.x > 200 || position.y < 0 || position.y > 150) {            
+        if (position.x < 0 || position.x > 200 || position.y < 0 || position.y > 150) {
             //边界检测，超出边界取消事件处理函数绑定
             this.removeMouseMoveListener();
             return;
@@ -88,4 +90,29 @@ function GradientControlDot({ id, position, changeDotPosition }) {
     };
 
     return <div className="dot" onMouseDown={onMouseDownHandle} style={posStyle}></div>
+}
+
+const mapStateToProps = state => {
+    return {
+        originalPositions: state.gradient.positions,
+        positions: _.unzip(state.gradient.positions),
+        background: transformPositionToLinearGradientStyle(state.gradient.positions)
+    };
+}
+
+const mapDispatchToProps = {
+    changePosition: (payload) => ({ type: "changePosition", payload }),
+};
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class Gradients extends Component {
+    render() {
+
+        return (<div>
+            {
+                rgbArray.map((color, idx) => <Gradient {...this.props} key={idx} colorChannel={idx} positions={this.props.positions[idx]} />)
+            }
+        </div>)
+    }
+
 }

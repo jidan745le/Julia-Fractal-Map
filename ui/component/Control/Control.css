@@ -20,10 +20,17 @@
 
 .tab-content{
     margin: 0;
-    padding: 20px;
+    padding: 2px;
     border: 0;
     font-size: 100%;
     font: inherit;
-    background-color: #fff;    
+    background-color: #fff;   
+    position: absolute; 
    
+}
+
+.label-para {
+    width: 200px;
+    display: inline-block;
+    text-align: center;
 }

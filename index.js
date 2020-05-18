@@ -9,26 +9,22 @@ import "./ui/index.js";
 
 //init render
 render(initialFractalLocationInfo, option);
-//attach Event For canvas
 
+//attach Event For canvas
 addCanvasWheelHandle(canvas, function (e) {
   console.log("wheel");
   disableFetch();
   wheelCanvas(e);
 })
 
-addDomDragHandle(canvas, function (e) {
-  //副本
+addDomDragHandle(canvas, function (e) {  
   disableFetch();
   moveCanvas(e);
 }
 );
 
-/************add event handle for canvas**************/
-
-
-addDomDragHandle($(".header"), function (e) {
-  //副本
+//attach Event For window
+addDomDragHandle($(".header"), function (e) {  
   e.preventDefault();
   let win = $(".window");
   win.style.left = getPositionOfDom(win).left + e.movementX + "px";

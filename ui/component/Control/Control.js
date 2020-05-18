@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { initialFractalLocationInfo, option, setPlatteOption } from "../../../modules/option";
 import { render, disableFetch } from "../../../modules/fetchModule/fetchModule";
 import { canvasStore } from "../../../modules/canvasModule/canvasBasic";
+import Gradients from "../Gradient/Gradient"
 import "./control.css";
 
 const tabContext = React.createContext();
@@ -99,9 +100,9 @@ class JuliaFractalControl extends Component {
 
     render() {
         return <div>
-            <label>real({this.props.realValue})</label><input style={{width:"600px"}}  ref={this.real} step="0.0001" min="-1.5" max="1.5" type="range" name="real" />
+            <label className="label-para">real({this.props.realValue})</label><input style={{width:"600px"}}  ref={this.real} step="0.0001" min="-1.5" max="1.5" type="range" name="real" />
             <br/>
-            <label>imaginary({this.props.imaginaryValue})</label><input style={{width:"600px"}} ref={this.imaginary} step="0.0001" min="-1.5" max="1.5" type="range" name="imaginary" />
+            <label className="label-para">imaginary({this.props.imaginaryValue})</label><input style={{width:"600px"}} ref={this.imaginary} step="0.0001" min="-1.5" max="1.5" type="range" name="imaginary" />
         </div>
     }
 }
@@ -110,6 +111,7 @@ let Control = () => {
     return <Tabs>
         <TabPane id={0} tab={"julia parameter"}><JuliaFractalControl /></TabPane>
         <TabPane id={1} tab={"system option"}>system option</TabPane>
+        <TabPane id={2} tab={"platte"}><Gradients/></TabPane>
     </Tabs>
 }
 
