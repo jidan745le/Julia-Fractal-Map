@@ -52,7 +52,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./index.html",
-      title: "标题-自己取的"
+      title: "JULIA FRACTAL"
       //   filename: "app.html"
     }),
     //在打包之前，先帮我们把生成目录删除一下

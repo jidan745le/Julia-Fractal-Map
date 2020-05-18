@@ -18,3 +18,19 @@ export var addCanvasWheelHandle = ((canvas, handle) => {
     canvas.addEventListener("wheel", handle);
 })
 
+export function addResizeHandleToWindow(win, handle) {
+    const resizeObserver = new ResizeObserver(entries => {
+      console.log(entries);
+      for (let entry of entries) {
+  
+        let { width, height } = entry.contentRect;
+        handle({width,height});
+  
+      }
+      console.log('Size changed');
+    });
+  
+  
+    resizeObserver.observe(win);
+  }
+
