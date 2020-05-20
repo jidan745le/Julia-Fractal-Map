@@ -1,4 +1,4 @@
-# <center>Julia Fractal Map</center> 
+#  <center>Julia Fractal Map</center> 
 ## Introduction
 [Click to visit the map ](https://jidan745le.github.io/Julia-Fractal-Map/build/)
 ## Instruction
