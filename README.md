@@ -10,5 +10,5 @@ The first tab content provide the range input for users to adjust the julia set 
 
 The gradient tool can be adjusted to apply various gradient effect on the julia graph.
 ## Screenshot
-![image](https://jidan745le.github.io/Julia-Fractal-Map/screenshot/screenshot.png)
-![image](https://jidan745le.github.io/Julia-Fractal-Map/screenshot/screenshot1.png)
+![image](https://github.com/jidan745le/Julia-Fractal-Map/blob/master/screenshot/screenshot1.png)
+![image](https://github.com/jidan745le/Julia-Fractal-Map/blob/master/screenshot/screenshot2.png)
