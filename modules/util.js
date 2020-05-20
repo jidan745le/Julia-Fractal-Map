@@ -7,3 +7,8 @@ export function getPositionOfDom(element) {
     let top = parseInt(window.getComputedStyle(element)["top"]);
     return { left, top }
 }
+
+export function moveDom(dom,event) {
+    dom.style.left = getPositionOfDom(dom).left + event.movementX + "px";
+    dom.style.top = getPositionOfDom(dom).top + event.movementY + "px";
+}

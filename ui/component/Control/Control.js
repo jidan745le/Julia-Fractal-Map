@@ -107,10 +107,20 @@ class JuliaFractalControl extends Component {
     }
 }
 
+class SystemOption extends Component{
+    render(){
+        return <RadioGroup>
+            <RadioButton value=""/>
+            <RadioButton value=""/>
+            <RadioButton value=""/>
+        </RadioGroup>
+    }
+}
+
 let Control = () => {
     return <Tabs>
         <TabPane id={0} tab={"julia parameter"}><JuliaFractalControl /></TabPane>
-        <TabPane id={1} tab={"system option"}>system option</TabPane>
+        {/* <TabPane id={1} tab={"system option"}>system option</TabPane> */}
         <TabPane id={2} tab={"platte"}><Gradients/></TabPane>
     </Tabs>
 }

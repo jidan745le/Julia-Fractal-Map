@@ -21,6 +21,8 @@
     border-bottom-color: #808080;
     box-shadow: 1px 1px 0 0 #000;
     z-index: 1;
+    left:25%;
+    top:25%;
 }
 
 .win98 .window .header {
