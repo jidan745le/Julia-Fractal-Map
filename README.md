@@ -1,6 +1,6 @@
 # Julia Fractal Map
 ## Introduction
-[Click to visit the map ](https://note.youdao.com/)
+[Click to visit the map ](https://jidan745le.github.io/Julia-Fractal-Map/build/)
 ## Instruction
 The app cantains two part,one part is the julia fractal map itself.The user can make map zoom in or zoom out to visit the detailed graph by scrolling the mouse and visit the rest of the map by dragging it.
 
