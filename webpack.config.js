@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -6,16 +7,16 @@ const CircularDependencyPlugin = require('circular-dependency-plugin')
 
 module.exports = {
   //指定打包的入口文件
-  mode: "development",
+  mode: "production",
   entry: "./index.js",
   //指定打包后的资源位置
   output: {
     //公共路径设置
     //publicPath: "https://cdn.baidu.com",
     path: path.resolve(__dirname, "./build"),
-    filename: "index.js"
+    filename: '[name].[contenthash].js'
   },
-  devtool: "inline-source-map",
+
   module: {
     //遇到不认识的模块就在这里找loader解决
     rules: [
@@ -60,12 +61,49 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css"
     }),
-    new CircularDependencyPlugin()
+    new CircularDependencyPlugin(),
+    new webpack.HashedModuleIdsPlugin()
   ],
   devServer: {
     contentBase: "./build",
     open: true,
     port: "8081",
 
-  }
+  },
+
+  optimization: {
+
+    runtimeChunk: 'single',
+
+    splitChunks: {
+
+        chunks: 'all', // 默认 async 可选值 all 和 initial
+
+        maxInitialRequests: Infinity, // 一个入口最大的并行请求数
+
+        minSize: 0, // 避免模块体积过小而被忽略
+
+        minChunks: 1, // 默认也是一表示最小引用次数
+
+        cacheGroups: {
+
+            vendor: {
+
+                test: /[\\/]node_modules[\\/]/, // 如果需要的依赖特别小，可以直接设置成需要打包的依赖名称
+
+                name(module, chunks, chcheGroupKey) { // 可提供布尔值、字符串和函数，如果是函数，可编写自定义返回值
+
+                    const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1] // 获取模块名称
+
+                    return `npm.${packageName.replace('@', '')}` // 可选，一般情况下不需要将模块名称 @ 符号去除
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
 };

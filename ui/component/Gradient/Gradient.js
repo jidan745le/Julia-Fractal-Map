@@ -1,4 +1,4 @@
-import _ from "lodash";
+import unzip from "lodash/unzip";
 import React, { Component } from "react";
 import "./Gradient.css";
 import { once } from "../../util/const.js";
@@ -95,7 +95,7 @@ function GradientControlDot({ id, position, changeDotPosition }) {
 const mapStateToProps = state => {
     return {
         originalPositions: state.gradient.positions,
-        positions: _.unzip(state.gradient.positions),
+        positions: unzip(state.gradient.positions),
         background: transformPositionToLinearGradientStyle(state.gradient.positions)
     };
 }

@@ -1,5 +1,5 @@
 {
-  "name": "webpack_day1",
+  "name": "julia-fractal-map",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -40,8 +40,7 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/runtime": "^7.4.5",
     "circular-dependency-plugin": "^5.2.0",
-    "raw-loader": "^4.0.1",
-    "underscore": "^1.10.2",
+    "raw-loader": "^4.0.1",    
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.2.0",

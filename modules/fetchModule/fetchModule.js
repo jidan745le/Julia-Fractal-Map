@@ -1,5 +1,5 @@
 import { drawChunk, setCanvasSize, saveSnapshotCanvas } from "../canvasModule/canvasBasic.js";
-import _ from "underscore";
+import debounce from "lodash/debounce"
 //properties {worker,working,promiseInstance}
 var workers = [{}, {}, {}, {}, {}, {}, {}, {}];
 var stopFlag = false;
@@ -119,7 +119,7 @@ let getFetchAllDataFunc = (canvasWidth, canvasHeight) => {
 
 function resizeRenderFunction(width, height) {
     render = getFetchAllDataFunc(width, height);
-    debouncedRender = _.debounce(render, 100);
+    debouncedRender = debounce(render, 100);
 }
 
 
@@ -127,7 +127,7 @@ function resizeRenderFunction(width, height) {
 let render = getFetchAllDataFunc(900, 600);
 
 //对渲染函数进行防抖包装
-let debouncedRender = _.debounce(render, 100);
+let debouncedRender = debounce(render, 100);
 
 
 
