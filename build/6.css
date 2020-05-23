@@ -1,0 +1,50 @@
+.gradient {    
+    height: 150px;
+    width:200px;
+    position: relative;
+    border-bottom:1px solid white;
+}
+
+.dot {
+    cursor: pointer;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+}
+.tab-menu {
+    padding:0px;
+    margin:0px;       
+}
+
+.tab-menu li {
+    
+    background-color: #ccc;
+    color: #bcbcbc;
+    display: inline-block;
+    padding: 20px 40px;
+    margin-right:2px;
+    cursor: pointer;
+    z-index: 0;
+}
+
+.tab-menu li.active {
+    background-color: #fff;
+}
+
+.tab-content{
+    margin: 0;
+    padding: 2px;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    background-color: #fff;   
+    position: absolute; 
+   
+}
+
+.label-para {
+    width: 200px;
+    display: inline-block;
+    text-align: center;
+}

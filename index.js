@@ -5,7 +5,7 @@ import { addResizeHandleToWindow, addDomDragHandle, addCanvasWheelHandle } from 
 import { initialFractalLocationInfo, option, setPlatteOption } from "./modules/option.js";
 import { $, moveDom } from "./modules/util.js";
 import "./index.css";
-import "./ui/index.js";
+
 
 //init render
 render(initialFractalLocationInfo, option);
@@ -35,6 +35,13 @@ addResizeHandleToWindow($(".window"), function ({ width, height }) {
   resizeRenderFunction(width, height - 20);
   snapshotCanvas && canvas.getContext("2d").drawImage(snapshotCanvas, 0, 0, width, height - 20);
 })
+
+
+  require.ensure(["./ui/index.js"], function(require) {
+    require("./ui/index.js");  
+  })
+
+
 
 
 
