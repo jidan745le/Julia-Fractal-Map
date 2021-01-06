@@ -8,7 +8,8 @@ export function getPositionOfDom(element) {
     return { left, top }
 }
 
-export function moveDom(dom,event) {
-    dom.style.left = getPositionOfDom(dom).left + event.movementX + "px";
-    dom.style.top = getPositionOfDom(dom).top + event.movementY + "px";
+export function moveDom(dom, event, iX, iY) {
+    console.log(event);
+    dom.style.left = event.clientX - iX + "px";
+    dom.style.top = event.clientY - iY + "px";
 }

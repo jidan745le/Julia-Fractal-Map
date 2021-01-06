@@ -1,9 +1,11 @@
 export var addDomDragHandle = ((dom, handle) => {
     dom.addEventListener("mousedown", function (e) {
-        document.addEventListener("mousemove", handle);
+        const {offsetX,offsetY} = e;
+        addDomDragHandle.moveHandle = e => handle(e,offsetX,offsetY);
+        document.addEventListener("mousemove",addDomDragHandle.moveHandle);
     });
-    dom.addEventListener("mouseup", function () {
-        document.removeEventListener("mousemove", handle)
+    document.addEventListener("mouseup", function () {
+        document.removeEventListener("mousemove", addDomDragHandle.moveHandle);
     });
 
     if (dom.tagName === "CANVAS") {

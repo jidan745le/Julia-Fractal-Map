@@ -23,10 +23,10 @@ addDomDragHandle(canvas, function (e) {
 );
 
 //attach Event For window
-addDomDragHandle($(".header"), function (e) {
+addDomDragHandle($(".header"), function (e,initialX,initialY) {
   e.preventDefault();
   let win = $(".window");
-  moveDom(win,event);
+  moveDom(win,e,initialX,initialY);
 }
 );
 
